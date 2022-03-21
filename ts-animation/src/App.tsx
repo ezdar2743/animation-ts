@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { createGlobalStyle } from 'styled-components';
 import { motion, Variants } from "framer-motion"
+import { useRef } from 'react';
 
 const Globalstyle = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -82,6 +83,17 @@ const Box = styled(motion.div)`
   grid-template-columns: repeat(2,1fr);
 `;
 
+const BiggerBox = styled.div`
+  width: 600px;
+  height: 600px;
+  background-color: rgba(255,255,255,0.3);
+  border-radius: 30px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const boxVariants:Variants = {
   hover :{
     rotateZ:90,
@@ -100,18 +112,24 @@ const boxVariants:Variants = {
 
 
 const App = () => {
+  const biggerBoxRef = useRef(null)
   return (
     <>
       <Globalstyle/>
       <Wrapper>
+        <BiggerBox ref={biggerBoxRef}>
           <Box
           variants={boxVariants}
           whileHover="hover"
           whileDrag="drag"
           whileTap="tap"
           drag
+          dragConstraints={biggerBoxRef}
+          dragSnapToOrigin
+          
+         
           />
-              
+          </BiggerBox>    
         
           
       </Wrapper>
