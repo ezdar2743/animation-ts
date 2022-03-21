@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { createGlobalStyle } from 'styled-components';
-import { motion, Variants } from "framer-motion"
-import { useRef } from 'react';
+import { motion, useMotionValue, useTransform, Variants } from "framer-motion"
+import { useEffect, useRef } from 'react';
 
 const Globalstyle = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -79,57 +79,34 @@ const Box = styled(motion.div)`
   background-color: rgba(255, 255, 255, 1);
   border-radius: 30px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
 `;
 
-const BiggerBox = styled.div`
-  width: 600px;
-  height: 600px;
-  background-color: rgba(255,255,255,0.3);
-  border-radius: 30px;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+
 
 const boxVariants:Variants = {
-  hover :{
-    rotateZ:90,
-    scale:1.2,
-  },
-  tap:{
-    scale:0.7,
-    borderRadius:"50%"
-    
-  },
-  drag:{
-    backgroundColor:"rgba(0, 168, 255,1.0)",
-    transition: {duration:1}
-  }
+  
 }
 
 
 const App = () => {
-  const biggerBoxRef = useRef(null)
+  const x = useMotionValue(0);
+  const scale = useTransform(x,[-950,0,950],[0,1,2])
+  
   return (
     <>
       <Globalstyle/>
       <Wrapper>
-        <BiggerBox ref={biggerBoxRef}>
+        
           <Box
           variants={boxVariants}
-          whileHover="hover"
-          whileDrag="drag"
-          whileTap="tap"
-          drag
-          dragConstraints={biggerBoxRef}
+          drag="x"
           dragSnapToOrigin
+          style={{x,scale}}
+          
           
          
           />
-          </BiggerBox>    
+          
         
           
       </Wrapper>
