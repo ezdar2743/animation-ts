@@ -40,7 +40,6 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
   color:black;
   line-height: 1.2;
-  background:linear-gradient(135deg,#e09,#d0e);
 }
 menu, ol, ul {
   list-style: none;
@@ -65,12 +64,14 @@ a{
 
 
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   height: 100vh;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(135deg,rgb(251, 197, 49),rgb(156, 136, 255));
+
 `;
 
 const Box = styled(motion.div)`
@@ -91,11 +92,15 @@ const boxVariants:Variants = {
 const App = () => {
   const x = useMotionValue(0);
   const rotateZ = useTransform(x,[-950,950],[-360,360])
+  const changeColor = useTransform(x,[-950,0,950],[
+    "linear-gradient(135deg,rgb(251, 197, 49),rgb(156, 136, 255)",
+    "linear-gradient(135deg,rgb(0, 168, 255),rgb(232, 65, 24)",
+    "linear-gradient(135deg,rgb(72, 126, 176),rgb(53, 59, 72)"])
   
   return (
     <>
       <Globalstyle/>
-      <Wrapper>
+      <Wrapper style={{background: changeColor}} >
         
           <Box
           variants={boxVariants}
