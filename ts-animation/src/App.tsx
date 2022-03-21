@@ -91,6 +91,10 @@ const boxVariants:Variants = {
     scale:0.7,
     borderRadius:"50%"
     
+  },
+  drag:{
+    backgroundColor:"rgba(0, 168, 255,1.0)",
+    transition: {duration:1}
   }
 }
 
@@ -103,7 +107,9 @@ const App = () => {
           <Box
           variants={boxVariants}
           whileHover="hover"
+          whileDrag="drag"
           whileTap="tap"
+          drag
           />
               
         
