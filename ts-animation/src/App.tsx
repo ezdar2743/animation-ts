@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { createGlobalStyle } from 'styled-components';
-import { motion, useMotionValue, useTransform, Variants } from "framer-motion"
+import { motion, useMotionValue, useTransform, useViewportScroll, Variants } from "framer-motion"
 import { useEffect, useRef } from 'react';
 
 const Globalstyle = createGlobalStyle`
@@ -65,12 +65,11 @@ a{
 
 
 const Wrapper = styled(motion.div)`
-  height: 100vh;
+  height: 500vh;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg,rgb(251, 197, 49),rgb(156, 136, 255));
 
 `;
 
@@ -91,10 +90,12 @@ const boxVariants:Variants = {
 
 const App = () => {
   const x = useMotionValue(0);
+  const {scrollYProgress} = useViewportScroll();
+  const scale = useTransform(scrollYProgress,[0,1],[1,3])
   const rotateZ = useTransform(x,[-950,950],[-360,360])
   const changeColor = useTransform(x,[-950,0,950],[
-    "linear-gradient(135deg,rgb(251, 197, 49),rgb(156, 136, 255)",
     "linear-gradient(135deg,rgb(0, 168, 255),rgb(232, 65, 24)",
+    "linear-gradient(135deg,rgb(251, 197, 49),rgb(156, 136, 255)",
     "linear-gradient(135deg,rgb(72, 126, 176),rgb(53, 59, 72)"])
   
   return (
@@ -106,7 +107,7 @@ const App = () => {
           variants={boxVariants}
           drag="x"
           dragSnapToOrigin
-          style={{x,rotateZ}}
+          style={{x,rotateZ,scale}}
           
           
          
