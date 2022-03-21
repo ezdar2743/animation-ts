@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { createGlobalStyle } from 'styled-components';
+import { motion } from "framer-motion"
 
 const Globalstyle = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -71,7 +72,7 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const Box = styled.div`
+const Box = styled(motion.div)`
   width: 200px;
   height: 200px;
   background-color: white;
@@ -84,7 +85,13 @@ const App = () => {
     <>
       <Globalstyle/>
       <Wrapper>
-          <Box/>
+          <Box
+          initial={{scale:0}}
+          animate={{scale:1,rotateZ:360}}
+          transition={{duration:1,type:"spring",bounce:0.5}}
+
+          />
+          
       </Wrapper>
     </>
   );
