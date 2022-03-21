@@ -75,17 +75,49 @@ const Wrapper = styled.div`
 const Box = styled(motion.div)`
   width: 200px;
   height: 200px;
-  background-color: white;
-  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
 `;
-const myVariants = {
+const Circle = styled(motion.div)`
+  background-color: whitesmoke;
+  border-radius: 30px;
+  height: 60px;
+  width: 60px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+  place-self: center;
+`;
+//box animation
+const boxVariants = {
   start:{
-    scale:0,
-},
+    opacity:0,
+    scale:0.5,
+  },
   end:{
-    scale:1,rotateZ:360, transition:{delay:0.5,type:"spring", bounce:0.5}
+    opacity:1,
+    scale: 1,
+    transition:{
+      duration:1,
+      type:"spring",
+      bounce:0.5,
+      delayChildren: 0.5,
+      staggerChildren:0.2,
+    }
   }
+}
+const circleVariants={
+  start:{
+    opacity:0,
+    y:10,
+  },
+  end:{
+    opacity:1,
+    y:0,
+  }
+  
+
 }
 
 const App = () => {
@@ -93,11 +125,13 @@ const App = () => {
     <>
       <Globalstyle/>
       <Wrapper>
-          <Box variants={myVariants}
-              initial="start"
-              animate="end"
-
-          />
+          <Box variants={boxVariants} initial="start" animate="end">
+              <Circle variants={circleVariants}/>
+              <Circle variants={circleVariants}/>
+              <Circle variants={circleVariants}/>
+              <Circle variants={circleVariants}/>
+              
+          </Box>
           
       </Wrapper>
     </>
