@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { createGlobalStyle } from 'styled-components';
-import { motion } from "framer-motion"
+import { motion, Variants } from "framer-motion"
 
 const Globalstyle = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -75,63 +75,38 @@ const Wrapper = styled.div`
 const Box = styled(motion.div)`
   width: 200px;
   height: 200px;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 1);
   border-radius: 30px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
   display: grid;
   grid-template-columns: repeat(2,1fr);
 `;
-const Circle = styled(motion.div)`
-  background-color: whitesmoke;
-  border-radius: 30px;
-  height: 60px;
-  width: 60px;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
-  place-self: center;
-`;
-//box animation
-const boxVariants = {
-  start:{
-    opacity:0,
-    scale:0.5,
-  },
-  end:{
-    opacity:1,
-    scale: 1,
-    transition:{
-      duration:1,
-      type:"spring",
-      bounce:0.5,
-      delayChildren: 0.5,
-      staggerChildren:0.2,
-    }
-  }
-}
-const circleVariants={
-  start:{
-    opacity:0,
-    y:10,
-  },
-  end:{
-    opacity:1,
-    y:0,
-  }
-  
 
+const boxVariants:Variants = {
+  hover :{
+    rotateZ:90,
+    scale:1.2,
+  },
+  tap:{
+    scale:0.7,
+    borderRadius:"50%"
+    
+  }
 }
+
 
 const App = () => {
   return (
     <>
       <Globalstyle/>
       <Wrapper>
-          <Box variants={boxVariants} initial="start" animate="end">
-              <Circle variants={circleVariants}/>
-              <Circle variants={circleVariants}/>
-              <Circle variants={circleVariants}/>
-              <Circle variants={circleVariants}/>
+          <Box
+          variants={boxVariants}
+          whileHover="hover"
+          whileTap="tap"
+          />
               
-          </Box>
+        
           
       </Wrapper>
     </>
