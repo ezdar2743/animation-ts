@@ -90,7 +90,7 @@ const boxVariants:Variants = {
 
 const App = () => {
   const x = useMotionValue(0);
-  const scale = useTransform(x,[-950,0,950],[0,1,2])
+  const rotateZ = useTransform(x,[-950,950],[-360,360])
   
   return (
     <>
@@ -101,7 +101,7 @@ const App = () => {
           variants={boxVariants}
           drag="x"
           dragSnapToOrigin
-          style={{x,scale}}
+          style={{x,rotateZ}}
           
           
          
