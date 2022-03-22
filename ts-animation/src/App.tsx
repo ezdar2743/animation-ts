@@ -86,22 +86,24 @@ const Box = styled(motion.div)`
 `;
 
 const slideVariants= {
-  start:{
+  start:(back:boolean)=>({
+      x:back?-500:500,  
       opacity: 0,
-      scale:0,
-      x:500,
-  },
+      scale:0.5,
+      
+  }),
   end:{
       opacity:1,
       scale:1,
       x:0,
-      transition:{duration:1}
+      transition:{duration:0.3}
   },
-  exit:{
+  exit:(back:boolean)=>({
+    x: back?500:-500,  
     opacity: 0,
-      scale:0,
-      x:-500,
-  }
+    scale:0.5,
+    transition:{duration:0.3}
+  })
 
 }
 
@@ -109,15 +111,25 @@ const slideVariants= {
 
 const App = () => {
     const [slideNum,setSlideNum] = useState(1);
+    const [clickBack,setClickBack] = useState(false);
     const next = ()=>{
+      setClickBack(false)
       setSlideNum((pre)=> (pre===8? pre-7 : pre+1) )
+      
+    }
+    const back = ()=>{
+      setClickBack(true);
+      setSlideNum((pre)=> (pre===1? pre+7 : pre-1) )
+      
     }
   return (
     <>
       <Globalstyle/>
       <Wrapper>
-      <AnimatePresence>
+      <AnimatePresence exitBeforeEnter>
         <Box 
+         custom={clickBack}
+        
         variants={slideVariants}
         initial="start"
         animate="end"
@@ -125,6 +137,7 @@ const App = () => {
         key={slideNum}> {slideNum}</Box>
       </AnimatePresence>
       <button onClick={next}>next</button>    
+      <button onClick={back}>back</button>   
       </Wrapper>
     </>
   )
