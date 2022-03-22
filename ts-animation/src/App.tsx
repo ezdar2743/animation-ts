@@ -80,55 +80,51 @@ const Box = styled(motion.div)`
   border-radius: 30px;
   position: absolute;
   top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
-const ClickVariants={
+const slideVariants= {
   start:{
-    opacity: 1,
-    scale: 0.5,
-
-    
+      opacity: 0,
+      scale:0,
+      x:500,
   },
-  visible:{
-    opacity: 1,
-    scale: 1,
-    
-
-    
+  end:{
+      opacity:1,
+      scale:1,
+      x:0,
+      transition:{duration:1}
   },
-  leaving:{
-    opacity:0,
-    scale:0,
-    y:100
-    
+  exit:{
+    opacity: 0,
+      scale:0,
+      x:-500,
   }
+
 }
 
 
 
 const App = () => {
-    const [showing,setShowing] = useState(false);
-    const onClick = ()=>{
-      setShowing(pre=> !pre)
+    const [slideNum,setSlideNum] = useState(1);
+    const next = ()=>{
+      setSlideNum((pre)=> (pre===8? pre-7 : pre+1) )
     }
   return (
     <>
       <Globalstyle/>
-      
       <Wrapper>
-  
       <AnimatePresence>
-        {showing? (<Box 
-        variants={ClickVariants}
+        {[1,2,3,4,5,6,7,8].map(i => slideNum===i ? <Box 
+        variants={slideVariants}
         initial="start"
-        animate="visible"
-        exit="leaving"
-        />) : null}  
+        animate="end"
+        exit="exit"
+        key={i}> {i}</Box>: null)}
       </AnimatePresence>
-      <button onClick={onClick}>click</button>
-          
-        
-          
+      <button onClick={next}>next</button>    
       </Wrapper>
     </>
   );
