@@ -107,24 +107,18 @@ const clickVariant:Variants= {
 
 
 const App = () => {
-  const [clicked, setClicked] = useState(false);
-  const onClick= ()=>{
-    console.log('s')
-    setClicked(pre => !pre)
-  }
+  const [clicked, setClicked] = useState<null|string>(null);
+  
   return (
     <>
       <Globalstyle/>
       <Wrapper>
         <Grid>
-        <Box onClick={onClick} layoutId="1box"></Box>
-        <Box></Box>
-        <Box></Box>
-        <Box></Box>
+        {["1","2","3","4"].map((num)=> <Box onClick={()=>setClicked(num)} key={num} layoutId={num}/>)}
         </Grid>
        <AnimatePresence> {clicked? <ShowModal 
-       variants={clickVariant} initial="start" animate="animate" exit="opacity" onClick={onClick}> 
-       <Box style={{width:400, height:200}} layoutId="1box"/></ShowModal> : null}</AnimatePresence>
+       variants={clickVariant} initial="start" animate="animate" exit="exit" onClick={()=>setClicked(null)}> 
+       <Box style={{width:400, height:200}} layoutId={clicked}/></ShowModal> : null}</AnimatePresence>
       </Wrapper>
       
     </>
