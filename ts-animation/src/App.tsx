@@ -68,77 +68,51 @@ const Wrapper = styled(motion.div)`
   height: 100vh;
   width: 100vw;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   background: linear-gradient(135deg,rgb(251, 197, 49),rgb(156, 136, 255));
-
+  
 `;
 const Box = styled(motion.div)`
   width: 300px;
   height: 300px;
   background-color: rgba(0, 168, 255,0.7);
   border-radius: 30px;
-  position: absolute;
-  top: 100px;
+  
+  
   display: flex;
-  justify-content: center;
+  justify-content:center;
   align-items: center;
 `;
 
-const slideVariants= {
-  start:(back:boolean)=>({
-      x:back?-500:500,  
-      opacity: 0,
-      scale:0.5,
-      
-  }),
-  end:{
-      opacity:1,
-      scale:1,
-      x:0,
-      transition:{duration:0.3}
-  },
-  exit:(back:boolean)=>({
-    x: back?500:-500,  
-    opacity: 0,
-    scale:0.5,
-    transition:{duration:0.3}
-  })
 
-}
-
+const Circle = styled(motion.div)`
+  background-color: tomato;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+`;
 
 
 const App = () => {
-    const [slideNum,setSlideNum] = useState(1);
-    const [clickBack,setClickBack] = useState(false);
-    const next = ()=>{
-      setClickBack(false)
-      setSlideNum((pre)=> (pre===8? pre-7 : pre+1) )
-      
-    }
-    const back = ()=>{
-      setClickBack(true);
-      setSlideNum((pre)=> (pre===1? pre+7 : pre-1) )
-      
+    const [clicked,setClicked] = useState(false)
+    const onClick = ()=>{
+      setClicked(pre=>!pre)
     }
   return (
     <>
       <Globalstyle/>
       <Wrapper>
-      <AnimatePresence exitBeforeEnter>
-        <Box 
-         custom={clickBack}
-        
-        variants={slideVariants}
-        initial="start"
-        animate="end"
-        exit="exit"
-        key={slideNum}> {slideNum}</Box>
-      </AnimatePresence>
-      <button onClick={next}>next</button>    
-      <button onClick={back}>back</button>   
+        <Box>
+          {clicked?<Circle  layoutId="circle"  style={{borderRadius:50}}/>:null}
+          </Box>
+        <Box>
+          {!clicked?<Circle layoutId="circle" style={{borderRadius:0,scale:2}}/>:null}
+        </Box>
+        <button onClick={onClick}>Click</button>   
       </Wrapper>
+      
     </>
   )
 };
