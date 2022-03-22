@@ -40,6 +40,7 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
   color:black;
   line-height: 1.2;
+  background: linear-gradient(135deg,rgb(251, 197, 49),rgb(156, 136, 255));
 }
 menu, ol, ul {
   list-style: none;
@@ -64,53 +65,66 @@ a{
 
 
 
-const Wrapper = styled(motion.div)`
+const Wrapper = styled.div`
   height: 100vh;
   width: 100vw;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background: linear-gradient(135deg,rgb(251, 197, 49),rgb(156, 136, 255));
-  
+`;
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 50vw;
+  gap: 10px;
+  div:first-child,
+  div:last-child {
+    grid-column: span 2;
+  }
+`;
+const ShowModal = styled(motion.div)`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 `;
 const Box = styled(motion.div)`
-  width: 300px;
-  height: 300px;
-  background-color: rgba(0, 168, 255,0.7);
-  border-radius: 30px;
-  
-  
-  display: flex;
-  justify-content:center;
-  align-items: center;
+
+  height: 200px;
+  background-color: rgba(255,255,255,1);
+  border-radius: 30px;  
+
 `;
 
-
-const Circle = styled(motion.div)`
-  background-color: tomato;
-  height: 100px;
-  width: 100px;
-  border-radius: 50%;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
-`;
+const clickVariant:Variants= {
+  start:{ backgroundColor: "rgba(0,0,0,0.5)"},
+  animate:{backgroundColor: "rgba(0,0,0,0.7)"},
+  exit : {backgroundColor: "rgba(0,0,0,0.5)"},
+}
 
 
 const App = () => {
-    const [clicked,setClicked] = useState(false)
-    const onClick = ()=>{
-      setClicked(pre=>!pre)
-    }
+  const [clicked, setClicked] = useState(false);
+  const onClick= ()=>{
+    console.log('s')
+    setClicked(pre => !pre)
+  }
   return (
     <>
       <Globalstyle/>
       <Wrapper>
-        <Box>
-          {clicked?<Circle  layoutId="circle"  style={{borderRadius:50}}/>:null}
-          </Box>
-        <Box>
-          {!clicked?<Circle layoutId="circle" style={{borderRadius:0,scale:2}}/>:null}
-        </Box>
-        <button onClick={onClick}>Click</button>   
+        <Grid>
+        <Box onClick={onClick} layoutId="1box"></Box>
+        <Box></Box>
+        <Box></Box>
+        <Box></Box>
+        </Grid>
+       <AnimatePresence> {clicked? <ShowModal 
+       variants={clickVariant} initial="start" animate="animate" exit="opacity" onClick={onClick}> 
+       <Box style={{width:400, height:200}} layoutId="1box"/></ShowModal> : null}</AnimatePresence>
       </Wrapper>
       
     </>
