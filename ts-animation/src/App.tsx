@@ -117,17 +117,18 @@ const App = () => {
       <Globalstyle/>
       <Wrapper>
       <AnimatePresence>
-        {[1,2,3,4,5,6,7,8].map(i => slideNum===i ? <Box 
+        <Box 
         variants={slideVariants}
         initial="start"
         animate="end"
         exit="exit"
-        key={i}> {i}</Box>: null)}
+        key={slideNum}> {slideNum}</Box>
       </AnimatePresence>
       <button onClick={next}>next</button>    
       </Wrapper>
     </>
-  );
+  )
 };
+
 
 export default App;
